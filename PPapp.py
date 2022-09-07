@@ -15,8 +15,8 @@ def change6r():
     
 st.set_page_config(layout="wide")
 with st.sidebar:
-    pp_date=st.date_input("排盘日期",pdlm.now().date())
-    pp_time=st.time_input("排盘时间",pdlm.now().time())
+    pp_date=st.date_input("排盘日期",pdlm.now(tz='Asia/Shanghai').date())
+    pp_time=st.time_input("排盘时间",pdlm.now(tz='Asia/Shanghai').time())
     
     # btn1=st.button('排盘')
     # if btn1:
