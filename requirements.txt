@@ -1,0 +1,4 @@
+pandas==1.4.4
+pendulum==2.1.2
+streamlit==1.12.2
+sxtwl==2.0.6
