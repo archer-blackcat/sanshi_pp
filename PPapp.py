@@ -4,7 +4,7 @@ from PaiPan import paipan_csh,HePan
 import pandas as pd
 from st_aggrid import AgGrid
 
-st.set_page_config(layout="wide",page_title="嘿喵排盘")
+pd.set_option('max_colwidth',100)
 
 JieQi = ["冬至", "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏",
         "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降",
@@ -13,10 +13,10 @@ grff = ['甲戊庚牛羊','甲羊戊庚牛']
 def change6r():
     hp.add_6r(gr=grff.index(st.session_state['choice']))
     
-
+st.set_page_config(layout="wide")
 with st.sidebar:
-    pp_date=st.date_input("排盘日期",pdlm.now(tz='Asia/Shanghai').date())
-    pp_time=st.time_input("排盘时间",pdlm.now(tz='Asia/Shanghai').time())
+    pp_date=st.date_input("排盘日期",pdlm.now().date())
+    pp_time=st.time_input("排盘时间",pdlm.now().time())
     
     # btn1=st.button('排盘')
     # if btn1:
