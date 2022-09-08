@@ -1,7 +1,7 @@
 import streamlit as st
 import pendulum as pdlm
 from PaiPan import paipan_csh,HePan
-from SanShi import RiSha
+from SanShi import RiSha,YueSha
 import pandas as pd
 from st_aggrid import AgGrid
 
