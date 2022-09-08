@@ -1,10 +1,11 @@
 import streamlit as st
 import pendulum as pdlm
 from PaiPan import paipan_csh,HePan
+from SanShi import RiSha
 import pandas as pd
 from st_aggrid import AgGrid
 
-pd.set_option('max_colwidth',100)
+st.set_page_config(layout="wide",page_title="嘿喵排盘")
 
 JieQi = ["冬至", "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏",
         "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降",
@@ -13,7 +14,7 @@ grff = ['甲戊庚牛羊','甲羊戊庚牛']
 def change6r():
     hp.add_6r(gr=grff.index(st.session_state['choice']))
     
-st.set_page_config(layout="wide")
+
 with st.sidebar:
     pp_date=st.date_input("排盘日期",pdlm.now().date())
     pp_time=st.time_input("排盘时间",pdlm.now().time())
@@ -98,6 +99,12 @@ with tdp:
                 AgGrid(pf)
 
 with lrp:
+    lr_con=st.container()
+    col_l,col_r1,col_r2 = lr_con.columns(3)
+    
+    rs=RiSha()
+    rs_table = rs.give_sha(*bazi1['日'])
+    
     tynp = hp.ty.np.pan
     pp = hp.zhi_p.pan
     for x in tynp:
@@ -109,21 +116,30 @@ with lrp:
     kw = ['天将','上神','宫位','类象','乙盘将','乙盘神']
     chuan=hp.chuan
     
-   
-    for x in chuan:
-       
-        st.write(x[1]['六亲'],"  ",f"_{x[1]['天盘遁干']}_",f"**{x[1]['天盘']}**",x[1]['天将'],f":{x[1]['将临类象']}；；",",".join(hp.get(x[0],'乙盘将')),",".join(hp.get(x[0],'乙盘神')))
-    
-    st.caption(hp.ke_name+","+hp.lr.get_pj()+","+hp.chuan_name)
+            
+    with col_l:
+        for x in chuan:
+
+            st.write(x[1]['六亲'],"  ",f"_{x[1]['天盘遁干']}_",f"**{x[1]['天盘']}**",
+                     x[1]['天将'],f":{x[1]['将临类象']}；；",",".join(hp.get(x[0],'乙盘将')),",".join(hp.get(x[0],'乙盘神')))
+
+        st.caption(hp.ke_name+","+hp.lr.get_pj()+","+hp.chuan_name)
+        tjname=dict(zip(['贵人', '腾蛇', '朱雀', '六合', '勾陈', '青龙', '天空', '白虎', '太常', '玄武', '太阴', '天后'],"贵蛇雀合勾龙空虎常玄阴后"))
+        st.write(*[tjname[ke[1]['天将']] for ke in hp.sk][-1::-1])
+        st.write(*[ke[1]['天盘'] for ke in hp.sk][-1::-1])
+        st.write(*[ke[0] for ke in hp.sk[-1::-1]])
+    with col_r1:
+        for x in "子丑寅卯辰巳":
+            st.write(f"**{x}**",','.join(rs_table[x]))
+    with col_r2:
+        for x in "午未申酉戌亥":
+            st.write(f"**{x}**",','.join(rs_table[x]))
     
     #col_k = st.columns(4)
     # for i in [3,2,1,0]:
     #     with col_k[i]:
     #         ke = hp.sk[i]
-    tjname=dict(zip(['贵人', '腾蛇', '朱雀', '六合', '勾陈', '青龙', '天空', '白虎', '太常', '玄武', '太阴', '天后'],"贵蛇雀合勾龙空虎常玄阴后"))
-    st.write(*[tjname[ke[1]['天将']] for ke in hp.sk][-1::-1])
-    st.write(*[ke[1]['天盘'] for ke in hp.sk][-1::-1])
-    st.write(*[ke[0] for ke in hp.sk[-1::-1]])
+    
     
 
     
