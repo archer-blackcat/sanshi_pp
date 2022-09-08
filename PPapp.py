@@ -13,7 +13,7 @@ grff = ['甲戊庚牛羊','甲羊戊庚牛']
 def change6r():
     hp.add_6r(gr=grff.index(st.session_state['choice']))
     
-st.set_page_config(layout="wide")
+
 with st.sidebar:
     pp_date=st.date_input("排盘日期",pdlm.now(tz='Asia/Shanghai').date())
     pp_time=st.time_input("排盘时间",pdlm.now(tz='Asia/Shanghai').time())
