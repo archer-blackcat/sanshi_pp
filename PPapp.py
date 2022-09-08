@@ -103,7 +103,11 @@ with lrp:
     col_l,col_r1,col_r2 = lr_con.columns(3)
     
     rs=RiSha()
-    rs_table = rs.give_sha(*bazi1['日'])
+    ys = YueSha()
+    ys.addin()
+    hs={}
+    for x in '子丑寅卯辰巳午未申酉戌亥':
+        hs[x] =  rs.give_sha(*bazi1['日'])[x]+ys.give_sha(bazi1['月'][1])[x]
     
     tynp = hp.ty.np.pan
     pp = hp.zhi_p.pan
@@ -130,15 +134,10 @@ with lrp:
         st.write(*[ke[0] for ke in hp.sk[-1::-1]])
     with col_r1:
         for x in "子丑寅卯辰巳":
-            st.write(f"**{x}**",','.join(rs_table[x]))
+            st.write(f"**{x}**",','.join(hs[x]))
     with col_r2:
         for x in "午未申酉戌亥":
-            st.write(f"**{x}**",','.join(rs_table[x]))
-    
-    #col_k = st.columns(4)
-    # for i in [3,2,1,0]:
-    #     with col_k[i]:
-    #         ke = hp.sk[i]
+            st.write(f"**{x}**",','.join(hs[x]))
     
     
 
