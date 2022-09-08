@@ -132,10 +132,10 @@ with lrp:
         st.write(*[tjname[ke[1]['天将']] for ke in hp.sk][-1::-1])
         st.write(*[ke[1]['天盘'] for ke in hp.sk][-1::-1])
         st.write(*[ke[0] for ke in hp.sk[-1::-1]])
-    with col_r1:
+    with col_r1.expander('神煞:子丑寅卯辰巳'):
         for x in "子丑寅卯辰巳":
             st.write(f"**{x}**",','.join(hs[x]))
-    with col_r2:
+    with col_r2.expander('神煞:午未申酉戌亥'):
         for x in "午未申酉戌亥":
             st.write(f"**{x}**",','.join(hs[x]))
     
