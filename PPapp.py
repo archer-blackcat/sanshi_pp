@@ -50,6 +50,9 @@ with st.sidebar:
     
     st.write(f"节气:{JieQi[jq]},月将:{yuejiang}")
     st.write(f"太乙局数：{'阴' if hp.ty.yy else '阳'}{hp.ty.jushu},遁甲局数：{'阴' if hp.djn_yy else '阳'}{hp.djn}")
+    typ = HePan([bazi1,bazi2],jq,yuejiang,paipan_csh(sj=0)[-1])
+    typ.add_ty()
+    st.write(typ.ty.jlist)
     
     
 
