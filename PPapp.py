@@ -3,7 +3,7 @@ import pendulum as pdlm
 from PaiPan import paipan_csh,HePan
 from SanShi import RiSha,YueSha
 import pandas as pd
-from st_aggrid import AgGrid
+from st_aggrid import AgGrid, GridOptionsBuilder,ColumnsAutoSizeMode
 
 st.set_page_config(layout="wide",page_title="嘿喵排盘")
 
@@ -45,8 +45,6 @@ with st.sidebar:
     st.write(f"太乙局数：{'阴' if hp.ty.yy else '阳'}{hp.ty.jushu},遁甲局数：{'阴' if hp.djn_yy else '阳'}{hp.djn}")
     
     
-    
-
 
 co_name=['巽辰卯寅艮',['巳',4,3,8,'丑'],['午',9,'中',1,'子'],['未',2,7,6,'亥'],'坤申酉戌乾']
 def mk_df(hp):
@@ -73,6 +71,8 @@ with tdp:
         ypj =dx['乙盘将']
         yps = dx['乙盘神']
         tf[x]=pd.Series([tianpan,dipan,tianjiang,men,xing,ypj,yps])
+
+    
     tyinfo = []
     tyj = hp.ty.jlist
     for x in list(tyj.keys())[:10]:
@@ -84,35 +84,23 @@ with tdp:
             tyinfo.append(f"**{x}**:{word};")
             
     st.write(*tyinfo)
-    AgGrid(tf["巽 巳 午 未 坤".split()])
-    AgGrid(tf["辰 4 9 2 申".split()])
-    AgGrid(tf["卯 3 中 7 酉".split()])
-    AgGrid(tf["寅 8 1 6 戌".split()])
-    AgGrid(tf["艮 丑 子 亥 乾".split()])
-    # cols = st.columns(5)
-    # for i in range(5):
-    #     for name in co_name[i]:
-    #         pf = pd.DataFrame(df[str(name)].astype(str)).copy()
-    #         infos = ['上神','宫位']
-            
-    #         if name in hp.zhi_p.pan:
-    #             infos += ['天将','六亲']
+    row_grp = ["巽 巳 午 未 坤",
+                "辰 4 9 2 申",
+                "卯 3 中 7 酉",
+                "寅 8 1 6 戌",
+                "艮 丑 子 亥 乾"]
+    for grp in row_grp:
+        gg = tf[grp.split()]
+        gopnb = GridOptionsBuilder.from_dataframe(gg)
+        gopnb.configure_default_column(lockVisible=True)
 
-    #         if name in hp.gong_p.pan:
-    #             infos += ['八神','八门','九星']
-               
+        stgr = [x for x in grp.split() if x in "123456789"]
+        gopnb.configure_columns(column_names=stgr,cellStyle={'backgroundColor': '#cc99cc'})
 
-    #         if name == '中':
-    #             pf.loc['值使']=hp.zhishi+str(hp.zslg)
-           
-    #             pf.loc['值符']=hp.zhifu +str(hp.zflg)
-          
-    #             infos+=['值使','值符']
+        grid_options = gopnb.build()
+        ag = AgGrid(gg,grid_options,columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW )
 
-    #         pf = pf.loc[infos+['乙盘神','乙盘将']]
-
-            # with cols[i]:
-            #     AgGrid(pf)
+    
 
 with lrp:
     lr_con=st.container()
@@ -161,24 +149,36 @@ with lrp:
     # for i in [3,2,1,0]:
     #     with col_k[i]:
     #         ke = hp.sk[i]
-    
-    
+    row_grp=["巳 午 未 申",
+            "辰 巽 坤 酉",
+            "卯 艮 乾 戌",
+            "寅 丑 子 亥"]
+    for grp in row_grp:
+        gg = df[grp.split()].loc[kw]
+        gopnb = GridOptionsBuilder.from_dataframe(gg)
+        gopnb.configure_default_column(lockVisible=True)
 
-    
-    AgGrid(df["巳 午 未 申".split()].loc[kw])
-    AgGrid(df["辰 巽 坤 酉".split()].loc[kw])
-    AgGrid(df["卯 艮 乾 戌".split()].loc[kw])
-    AgGrid(df["寅 丑 子 亥".split()].loc[kw])
-    
+        grid_options = gopnb.build()
+        ag = AgGrid(gg,grid_options,columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW )
+
+
 with qmp:
+    df = mk_df(hp)
     st.write(f"值使:{hp.zhishi+str(hp.zslg)}",f"值符:{hp.zhifu +str(hp.zflg)}")
     kw = ['九星','八神','上神','宫位','八门','乙盘将','乙盘神']
-    AgGrid(df["4 9 2".split()].loc[kw])
-    AgGrid(df["3 中 7".split()].loc[kw])
-    AgGrid(df["8 1 6".split()].loc[kw])
-#     st.dataframe(df["4 9 2".split()].loc[kw].astype(str),width=600)
-#     st.dataframe(df["3 中 7".split()].loc[kw].astype(str),width=600)
-#     st.dataframe(df["8 1 6".split()].loc[kw].astype(str),width=600)
+    row_grp=["4 9 2",
+            "3 中 7",
+            "8 1 6"]
+
+    for grp in row_grp:
+        gg = df[grp.split()].loc[kw]
+        gopnb = GridOptionsBuilder.from_dataframe(gg)
+        gopnb.configure_default_column(lockVisible=True)
+        
+
+
+        grid_options = gopnb.build()
+        ag = AgGrid(gg,grid_options,columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW )
     
         
                 
