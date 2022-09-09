@@ -86,7 +86,7 @@ with tdp:
         word = tyj[x]
         if x == '太乙':
             tyg = hp.ty.np.pan[word[0]]['卦名']
-            tyinfo.append( "**太乙**："+tyg+word[1]+";  ")
+            tyinfo.append( "**太乙**："+tyg+str(word[0])+word[1]+";  ")
         else:
             dd = lambda x : hp.ty.wp.pan[tyj[x]]['入宫'] if tyj[x] in hp.ty.wp.pan else ''
             tyinfo.append(f"**{x}**:{word}{dd(x)};")
