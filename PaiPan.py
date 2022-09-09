@@ -8,9 +8,10 @@ import pandas as pd
 def ty_js(pdd=pdlm.now().date(),pds=pdlm.now().time(),shiji=1):
     pdorig=pdlm.date(1804,5,14)
     day = sxtwl.fromSolar(pdd.year, pdd.month, pdd.day)
+    day = day if pds.hour<23 else day.after(1)
     shiGZ=day.getHourGZ(pds.hour)
     
-    jiri = (pdd-pdorig).days
+    jiri = (pdd-pdorig).days if pds.hour<23 else (pdd-pdorig).days+1
     jishu = jiri*12+shiGZ.dz+1 if shiji else jiri+1
     
     return jishu
