@@ -281,9 +281,12 @@ class TaiYi(TDpan):#-------------------太乙------------------#
         self.jlist['主大将']=zhusuan%10 if zhusuan%10!=0 else s9[zhusuan%9]
         self.jlist['客大将']=kesuan%10  if kesuan%10!=0 else s9[kesuan%9]
         self.jlist['定大将']=dingsuan%10 if dingsuan%10!=0 else s9[dingsuan%9]
-        self.jlist['主参将']=3*zhusuan%10 if  3*zhusuan%10!=0 else  s9[3*zhusuan%9]
-        self.jlist['客参将']=3*kesuan%10  if  3*kesuan%10!=0 else   s9[3*kesuan%9]
-        self.jlist['定参将']=3*dingsuan%10 if 3*dingsuan%10!=0 else s9[3*dingsuan%9]
+        zd = self.jlist['主大将']
+        kd = self.jlist['客大将']
+        dd = self.jlist['定大将']
+        self.jlist['主参将']=3*zd%10 if  3*zd%10!=0 else  s9[3*zd%9]
+        self.jlist['客参将']=3*kd%10  if  3*kd%10!=0 else   s9[3*kd%9]
+        self.jlist['定参将']=3*dd%10 if 3*dd%10!=0 else s9[3*dd%9]
         
         self.np.pan[self.jlist['主大将']] ['将表'].append('主大将')
         self.np.pan[self.jlist['客大将']] ['将表'].append('客大将')

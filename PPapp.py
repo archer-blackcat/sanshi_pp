@@ -82,13 +82,16 @@ with tdp:
     
     tyinfo = []
     tyj = hp.ty.jlist
-    for x in list(tyj.keys())[:10]:
+    for x in list(tyj.keys()):
         word = tyj[x]
         if x == '太乙':
             tyg = hp.ty.np.pan[word[0]]['卦名']
             tyinfo.append( "**太乙**："+tyg+word[1]+";  ")
         else:
-            tyinfo.append(f"**{x}**:{word};")
+            dd = lambda x : hp.ty.wp.pan[tyj[x]]['入宫'] if tyj[x] in hp.ty.wp.pan else ''
+            tyinfo.append(f"**{x}**:{word}{dd(x)};")
+#         else:
+#             tyinfo.append(f"**{x}**:{word};")
             
     st.write(*tyinfo)
     row_grp = ["巽 巳 午 未 坤",
@@ -168,7 +171,7 @@ with lrp:
         gopnb.configure_default_column(lockVisible=True)
         xx=[x for x in grp if x in xngn+pp_bm]
                 
-        gopnb.configure_columns(column_names=xx,cellStyle={'backgroundColor': '	#9F79EE'})
+        gopnb.configure_columns(column_names=xx,cellStyle={'backgroundColor': '#9F79EE'})
 
         grid_options = gopnb.build()
         ag = AgGrid(gg,grid_options,columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW )
