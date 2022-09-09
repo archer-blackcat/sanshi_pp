@@ -62,6 +62,17 @@ def mk_df(hp):
 tdp,lrp,qmp = st.tabs([' 合盘 ',' 六壬 ',' 奇门 '])
 with tdp:
     df = mk_df(hp)
+    tf = pd.DataFrame()
+    for x in df.columns:
+        dx=df[x].fillna('')
+        tianjiang = dx['天将']+dx['八神']
+        tianpan = dx['上神']
+        dipan = dx['宫位']
+        men = dx['类象']+dx['八门']
+        xing = dx['九星']+dx['六亲']
+        ypj =dx['乙盘将']
+        yps = dx['乙盘神']
+        tf[x]=pd.Series([tianpan,dipan,tianjiang,men,xing,ypj,yps])
     tyinfo = []
     tyj = hp.ty.jlist
     for x in list(tyj.keys())[:10]:
@@ -73,30 +84,35 @@ with tdp:
             tyinfo.append(f"**{x}**:{word};")
             
     st.write(*tyinfo)
-    cols = st.columns(5)
-    for i in range(5):
-        for name in co_name[i]:
-            pf = pd.DataFrame(df[str(name)].astype(str)).copy()
-            infos = ['上神','宫位']
+    AgGrid(tf["巽 巳 午 未 坤".split()])
+    AgGrid(tf["辰 4 9 2 申".split()])
+    AgGrid(tf["卯 3 中 7 酉".split()])
+    AgGrid(tf["寅 8 1 6 戌".split()])
+    AgGrid(tf["艮 丑 子 亥 乾".split()])
+    # cols = st.columns(5)
+    # for i in range(5):
+    #     for name in co_name[i]:
+    #         pf = pd.DataFrame(df[str(name)].astype(str)).copy()
+    #         infos = ['上神','宫位']
             
-            if name in hp.zhi_p.pan:
-                infos += ['天将','六亲']
+    #         if name in hp.zhi_p.pan:
+    #             infos += ['天将','六亲']
 
-            if name in hp.gong_p.pan:
-                infos += ['八神','八门','九星']
+    #         if name in hp.gong_p.pan:
+    #             infos += ['八神','八门','九星']
                
 
-            if name == '中':
-                pf.loc['值使']=hp.zhishi+str(hp.zslg)
+    #         if name == '中':
+    #             pf.loc['值使']=hp.zhishi+str(hp.zslg)
            
-                pf.loc['值符']=hp.zhifu +str(hp.zflg)
+    #             pf.loc['值符']=hp.zhifu +str(hp.zflg)
           
-                infos+=['值使','值符']
+    #             infos+=['值使','值符']
 
-            pf = pf.loc[infos+['乙盘神','乙盘将']]
+    #         pf = pf.loc[infos+['乙盘神','乙盘将']]
 
-            with cols[i]:
-                AgGrid(pf)
+            # with cols[i]:
+            #     AgGrid(pf)
 
 with lrp:
     lr_con=st.container()
