@@ -168,7 +168,7 @@ with lrp:
         gopnb.configure_default_column(lockVisible=True)
         xx=[x for x in grp if x in xngn+pp_bm]
                 
-        gopnb.configure_columns(column_names=xx,cellStyle={'backgroundColor': '#BA55D3'})
+        gopnb.configure_columns(column_names=xx,cellStyle={'backgroundColor': '	#9F79EE'})
 
         grid_options = gopnb.build()
         ag = AgGrid(gg,grid_options,columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW )
