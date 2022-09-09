@@ -1,7 +1,7 @@
 import streamlit as st
 import pendulum as pdlm
-from PaiPan import paipan_csh,HePan
-from SanShi import RiSha,YueSha
+from PaiPan import paipan_csh,HePan,xingnian
+from SanShi import RiSha,YueSha,NianSha,ModList
 import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder,ColumnsAutoSizeMode
 
@@ -10,6 +10,10 @@ st.set_page_config(layout="wide",page_title="嘿喵排盘")
 JieQi = ["冬至", "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏",
         "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降",
         "立冬", "小雪", "大雪"]
+Gan = ModList(["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"])
+Zhi = ModList(["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"])
+JiaZi = ModList([Gan.get(i)+Zhi.get(i) for i in range(60)])
+
 grff = ['甲戊庚牛羊','甲羊戊庚牛']
 def change6r():
     hp.add_6r(gr=grff.index(st.session_state['choice']))
@@ -18,6 +22,8 @@ def change6r():
 with st.sidebar:
     pp_date=st.date_input("排盘日期",pdlm.now(tz='Asia/Shanghai').date())
     pp_time=st.time_input("排盘时间",pdlm.now(tz='Asia/Shanghai').time())
+    pp_bm = st.selectbox('本命',JiaZi,index=3)
+    pp_nn = st.selectbox('性别',['乾','坤'],index=0)
     
     # btn1=st.button('排盘')
     # if btn1:
@@ -31,7 +37,7 @@ hp = HePan([bazi1,bazi2],jq,yuejiang,tyjs)
 hp.add_6r(gr=grff.index(op))
 hp.add_ty()
 hp.add_dj()
-
+xngn = xingnian(pp_bm,{'乾':1,'坤':0}[pp_nn],pp_date)
 
 with st.sidebar:    
     st.write(
@@ -39,7 +45,8 @@ with st.sidebar:
          '年柱': [bazi1['年'][0],bazi1['年'][1]],
          '月柱': [bazi1['月'][0],bazi1['月'][1]],
          '日柱': [bazi1['日'][0],bazi1['日'][1]],
-         '时柱': [bazi1['时'][0],bazi1['时'][1]],},index=['干','支']))
+         '时柱': [bazi1['时'][0],bazi1['时'][1]],
+         '行年': [xngn[0],xngn[1]]},index=['干','支']))
     
     st.write(f"节气:{JieQi[jq]},月将:{yuejiang}")
     st.write(f"太乙局数：{'阴' if hp.ty.yy else '阳'}{hp.ty.jushu},遁甲局数：{'阴' if hp.djn_yy else '阳'}{hp.djn}")
@@ -108,10 +115,12 @@ with lrp:
     
     rs=RiSha()
     ys = YueSha()
+    ns = NianSha()
+    ns.addin()
     ys.addin()
     hs={}
     for x in '子丑寅卯辰巳午未申酉戌亥':
-        hs[x] =  rs.give_sha(*bazi1['日'])[x]+ys.give_sha(bazi1['月'][1])[x]
+        hs[x] =  rs.give_sha(*bazi1['日'])[x]+ys.give_sha(bazi1['月'][1])[x]+ns.give_sha(bazi1['年'][1])[x]
     
     tynp = hp.ty.np.pan
     pp = hp.zhi_p.pan
@@ -157,6 +166,9 @@ with lrp:
         gg = df[grp.split()].loc[kw]
         gopnb = GridOptionsBuilder.from_dataframe(gg)
         gopnb.configure_default_column(lockVisible=True)
+        xx=[x for x in grp if x in xngn+pp_bm]
+                
+        gopnb.configure_columns(column_names=xx,cellStyle={'backgroundColor': '#F5F5F5'})
 
         grid_options = gopnb.build()
         ag = AgGrid(gg,grid_options,columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW )

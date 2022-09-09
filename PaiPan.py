@@ -62,6 +62,17 @@ def paipan_csh(pdd=pdlm.now().date(),pds=pdlm.now().time(),sj=1):
     yuejiang=get_yuejiang(pdd)
     tyjs = ty_js(pdd,pds,shiji=sj)
     return bazi1,bazi2,jq,yuejiang,tyjs
+
+def xingnian(gz='丁卯',fm=1,pdd=pdlm.now().date()):
+    xn = get_4z(pdd,sep=0)['年']
+    Gan = ModList(["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"])
+    Zhi = ModList(["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"])
+    jz = ModList([Gan.get(i)+Zhi.get(i) for i in range(60)]).rerange(gz)
+    xngnn = jz.rerange('丙寅') if fm else jz.reverse().rerange('壬申')
+    
+    return xngnn[jz.index(xn)]
+    
+
     
 
 class HePan(TDpan):
