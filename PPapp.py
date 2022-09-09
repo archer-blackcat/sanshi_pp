@@ -16,8 +16,8 @@ def change6r():
     
 
 with st.sidebar:
-    pp_date=st.date_input("排盘日期",pdlm.now(tz='Asia/Shanghai').date())
-    pp_time=st.time_input("排盘时间",pdlm.now(tz='Asia/Shanghai').time())
+    pp_date=st.date_input("排盘日期",pdlm.now().date())
+    pp_time=st.time_input("排盘时间",pdlm.now().time())
     
     # btn1=st.button('排盘')
     # if btn1:
@@ -132,12 +132,19 @@ with lrp:
         st.write(*[tjname[ke[1]['天将']] for ke in hp.sk][-1::-1])
         st.write(*[ke[1]['天盘'] for ke in hp.sk][-1::-1])
         st.write(*[ke[0] for ke in hp.sk[-1::-1]])
+    
+    
     with col_r1.expander('神煞:子丑寅卯辰巳'):
         for x in "子丑寅卯辰巳":
             st.write(f"**{x}**",','.join(hs[x]))
     with col_r2.expander('神煞:午未申酉戌亥'):
         for x in "午未申酉戌亥":
             st.write(f"**{x}**",','.join(hs[x]))
+    
+    #col_k = st.columns(4)
+    # for i in [3,2,1,0]:
+    #     with col_k[i]:
+    #         ke = hp.sk[i]
     
     
 

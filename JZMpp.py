@@ -188,8 +188,9 @@ def fuyin(xx,sk,zk,pk):
 
             else:
                 kname='课'
-                ccz = (zk['贼']+zk['克'])[0]
-                zcz = xing[ccz] if xing[ccz] != ccz else sk[1][1]['天盘']
+                #cck = (zk['贼']+zk['克'])[0]
+                ccz = sk[0][1]['天盘']
+                zcz = xing[ccz] if xing[ccz] != ccz else sk[2][1]['天盘']
             mcz = xing[zcz] if xing[zcz] != zcz else chong[zcz]
         
         if xing[ccz]==ccz:
@@ -232,6 +233,10 @@ def get_pan(xx,sk,shh=1):
     if sel[0] and sel[-1]:
         out = kbs(sk_d,zk,pk,shpl=shh)
         out[0]='反吟'
+    elif sel[0] and sel[-2]:
+        out = fuyin(xx,sk,zk,pk)
+        #out = kbs(sk_d,zk,pk,shpl=shh)
+        out[0]='伏吟'
     elif sel[0]:
         out = kbs(sk_d,zk,pk,shpl=shh)
     elif sel[-1]:

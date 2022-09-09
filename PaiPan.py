@@ -117,6 +117,7 @@ class HePan(TDpan):
         ty2hp=OrderedDict(zip(self.ty.np.pan.keys(),[1,8,3,4,9,2,7,6,'中']))
         wp =self.ty.wp.pan
         np =self.ty.np.pan
+        #self.ty2djp = self.ty.sync_np()
         for gn in wp :
             self.pan[gn]['乙盘将'].extend(wp[gn]['将表'])
             self.pan[gn]['乙盘神'].extend(wp[gn]['神基表'])
