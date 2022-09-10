@@ -69,7 +69,7 @@ def mk_df(hp):
     df.loc['宫位']=df.fillna('').apply(lambda x:x.loc['地遁']+x.name if (x.loc['地遁']+x.name) not in "123456789" else x.loc['甲盘'])
     return df
 
-st.write('皇极纳甲:',gz2gua(bazi1),'变',bian_gua(*gz2gua(bazi1)),'轨数：',cegui_shu(*gz2gua(bazi1),gxh=1,cgxh=1),'变轨数：',cegui_shu(*bian_gua(*gz2gua(bazi1))))
+st.write('皇极纳甲:',gz2gua(bazi1),'变',bian_gua(*gz2gua(bazi1)),'轨数：',cegui_shu(*gz2gua(bazi1),gxh=1,cgxh=1),'策数：',cegui_shu(*gz2gua(bazi1),gxh=0,cgxh=0))
 
 tdp,lrp,qmp = st.tabs([' 合盘 ',' 六壬 ',' 奇门 '])
 
