@@ -56,7 +56,7 @@ def get_4z(pdd=pdlm.now().date(),pds=pdlm.now().time(),sep=1):
     return out
     
 
-def paipan_csh(pdd=pdlm.now().date(),pds=pdlm.now().time(),sj=1):
+def paipan_csh(pdd=pdlm.now(tz='Asia/Shanghai').date(),pds=pdlm.now(tz='Asia/Shanghai').time(),sj=1):
     bazi1 = get_4z(pdd,pds)
     bazi2 = get_4z(pdd,pds,sep=0)
     jq=get_jq(pdd)
