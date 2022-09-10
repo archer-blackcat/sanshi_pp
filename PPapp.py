@@ -4,6 +4,7 @@ from PaiPan import paipan_csh,HePan,xingnian
 from SanShi import RiSha,YueSha,NianSha,ModList
 import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder,ColumnsAutoSizeMode
+from HuangJi import cegui_shu,gz2gua,bian_gua,najia_G,najia_Z
 
 st.set_page_config(layout="wide",page_title="嘿喵排盘")
 
@@ -42,17 +43,19 @@ xngn = xingnian(pp_bm,{'乾':1,'坤':0}[pp_nn],pp_date)
 with st.sidebar:    
     st.write(
         pd.DataFrame({
-         '年柱': [bazi1['年'][0],bazi1['年'][1]],
-         '月柱': [bazi1['月'][0],bazi1['月'][1]],
-         '日柱': [bazi1['日'][0],bazi1['日'][1]],
-         '时柱': [bazi1['时'][0],bazi1['时'][1]],
-         '行年': [xngn[0],xngn[1]]},index=['干','支']))
+         '年柱': [bazi1['年'][0]+'\n'+(str(najia_G[bazi1['年'][0]])),bazi1['年'][1]+'\n'+(str(najia_Z[bazi1['年'][1]]))],
+         '月柱': [bazi1['月'][0]+'\n'+(str(najia_G[bazi1['月'][0]])),bazi1['月'][1]+'\n'+(str(najia_Z[bazi1['月'][1]]))],
+         '日柱': [bazi1['日'][0]+'\n'+(str(najia_G[bazi1['日'][0]])),bazi1['日'][1]+'\n'+(str(najia_Z[bazi1['日'][1]]))],
+         '时柱': [bazi1['时'][0]+'\n'+(str(najia_G[bazi1['时'][0]])),bazi1['时'][1]+'\n'+(str(najia_Z[bazi1['时'][1]]))],
+         '行年': [xngn[0]+'\n'+(str(najia_G[xngn[0]])),xngn[1]+'\n'+(str(najia_Z[xngn[1]]))]},index=['干','支']))
     
     st.write(f"节气:{JieQi[jq]},月将:{yuejiang}")
     st.write(f"太乙局数：{'阴' if hp.ty.yy else '阳'}{hp.ty.jushu},遁甲局数：{'阴' if hp.djn_yy else '阳'}{hp.djn}")
     typ = HePan([bazi1,bazi2],jq,yuejiang,paipan_csh(sj=0)[-1])
     typ.add_ty()
     st.write(typ.ty.jlist)
+    
+    
     
     
 
@@ -66,8 +69,11 @@ def mk_df(hp):
     df.loc['宫位']=df.fillna('').apply(lambda x:x.loc['地遁']+x.name if (x.loc['地遁']+x.name) not in "123456789" else x.loc['甲盘'])
     return df
 
+st.write('皇极纳甲:',gz2gua(bazi1),'变',bian_gua(*gz2gua(bazi1)),'轨数：',cegui_shu(*gz2gua(bazi1),gxh=1,cgxh=1),'变轨数：',cegui_shu(*bian_gua(*gz2gua(bazi1))))
 
 tdp,lrp,qmp = st.tabs([' 合盘 ',' 六壬 ',' 奇门 '])
+
+
 with tdp:
     df = mk_df(hp)
     tf = pd.DataFrame()
@@ -87,11 +93,12 @@ with tdp:
     tyj = hp.ty.jlist
     for x in list(tyj.keys()):
         word = tyj[x]
+        dd = lambda x : hp.ty.wp.pan[tyj[x]]['入宫'] if tyj[x] in hp.ty.wp.pan else ''
         if x == '太乙':
             tyg = hp.ty.np.pan[word[0]]['卦名']
-            tyinfo.append( "**太乙**："+tyg+str(word[0])+word[1]+";  ")
+            tyinfo.append("**太乙**："+tyg+str(word[0])+word[1]+";  ")
         else:
-            dd = lambda x : hp.ty.wp.pan[tyj[x]]['入宫'] if tyj[x] in hp.ty.wp.pan else ''
+            
             tyinfo.append(f"**{x}**:{word}{dd(x)};")
 #         else:
 #             tyinfo.append(f"**{x}**:{word};")
