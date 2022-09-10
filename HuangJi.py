@@ -60,7 +60,7 @@ def get_guanum(sz):
     return tgs,dgs
 
 def htgua(shu,yy=0):
-    ht = dict(zip(range(1,9),'坎坤震巽坤乾兑艮离')) if yy else dict(zip(range(1,9),'坎坤震巽艮乾兑艮离'))
+    ht = dict(zip([1,2,3,4,6,7,8,9],'坎坤震巽坤乾兑艮离')) if yy else dict([1,2,3,4,6,7,8,9],'坎坤震巽艮乾兑艮离'))
     return ht[shu]
 
 def cegui_shu(tian_g,di_g,yao,gxh=0,cgxh=0):
