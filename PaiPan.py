@@ -56,7 +56,7 @@ def get_4z(pdd=pdlm.now().date(),pds=pdlm.now().time(),sep=1):
     return out
     
 
-def paipan_csh(pdd=pdlm.now(tz='Asia/Shanghai').date(),pds=pdlm.now(tz='Asia/Shanghai').time(),sj=1):
+def paipan_csh(pdd=pdlm.now().date(),pds=pdlm.now().time(),sj=1):
     bazi1 = get_4z(pdd,pds)
     bazi2 = get_4z(pdd,pds,sep=0)
     jq=get_jq(pdd)
@@ -148,3 +148,38 @@ class HePan(TDpan):
         self.gong_p.addv('八神',self.djp.get_name('八神'))
     def get(self,idx,name):
         return self.pan[idx][name]
+
+    def write_lr(self):
+        shang_jiang='  '
+        shang_shen='  '
+        zhong1=''
+        zhong2=''
+        xia_shen='  '
+        xia_jiang='  '
+        pan = self.lr.pan
+        tjname=dict(zip(['贵人', '腾蛇', '朱雀', '六合', '勾陈', '青龙', '天空', '白虎', '太常', '玄武', '太阴', '天后'],"贵蛇雀合勾龙空虎常玄阴后"))
+        for zhi in pan:
+            j = tjname[pan[zhi]['天将']]
+            s = pan[zhi]['天盘']
+            if zhi in '巳午未申':
+                shang_jiang+=j
+                shang_shen+=s
+            elif zhi =='辰':
+                zhong1+=j+s+'    '
+            elif zhi =='酉':
+                zhong1+=s+j
+            elif zhi =='卯':
+                zhong2+=j+s+'    '
+            elif zhi =='戌':
+                zhong2+=s+j
+            if zhi in '寅丑子亥':
+                xia_jiang+=j
+                xia_shen+=s
+
+        shang_jiang+='  '
+        shang_shen+='  '
+        xia_jiang+='  '
+        xia_shen+='  '
+
+        text='-----------\n'+shang_jiang+'\n'+shang_shen+'\n'+zhong1+'\n'+zhong2+'\n'+xia_shen+'\n'+xia_jiang+'\n-----------'
+        return text

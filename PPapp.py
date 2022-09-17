@@ -29,7 +29,7 @@ with st.sidebar:
     # btn1=st.button('排盘')
     # if btn1:
     #     pdd = pdlm.datetime(pp_date.year,pp_date.month,pp_date.day,pp_time.hour,pp_time.minute)
-    op = st.selectbox('贵人方法',grff,index=1)
+    op = st.selectbox('贵人方法',grff,index=0)
     
 
 
@@ -71,7 +71,7 @@ def mk_df(hp):
 
 st.write('皇极纳甲:',gz2gua(bazi1),'变',bian_gua(*gz2gua(bazi1)),'轨数：',cegui_shu(*gz2gua(bazi1),gxh=1,cgxh=1),'策数：',cegui_shu(*gz2gua(bazi1),gxh=0,cgxh=0))
 
-tdp,lrp,qmp = st.tabs([' 合盘 ',' 六壬 ',' 奇门 '])
+tdp,lrp,qmp,test = st.tabs([' 合盘 ',' 六壬 ',' 奇门 ','测试'])
 
 
 with tdp:
@@ -159,18 +159,14 @@ with lrp:
         st.write(*[ke[1]['天盘'] for ke in hp.sk][-1::-1])
         st.write(*[ke[0] for ke in hp.sk[-1::-1]])
     
+        
     
-    with col_r1.expander('神煞:子丑寅卯辰巳'):
-        for x in "子丑寅卯辰巳":
-            st.write(f"**{x}**",','.join(hs[x]))
-    with col_r2.expander('神煞:午未申酉戌亥'):
-        for x in "午未申酉戌亥":
+    with col_r1:
+        st.text(hp.write_lr())
+    with col_r2.expander('神煞'):
+        for x in "子丑寅卯辰巳午未申酉戌亥":
             st.write(f"**{x}**",','.join(hs[x]))
     
-    #col_k = st.columns(4)
-    # for i in [3,2,1,0]:
-    #     with col_k[i]:
-    #         ke = hp.sk[i]
     row_grp=["巳 午 未 申",
             "辰 巽 坤 酉",
             "卯 艮 乾 戌",
@@ -204,10 +200,10 @@ with qmp:
 
         grid_options = gopnb.build()
         ag = AgGrid(gg,grid_options,columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW )
-    
-        
-                
 
+
+with test:
+    st.text(hp.write_lr())
         
     
 
