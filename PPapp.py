@@ -112,7 +112,7 @@ with tdp:
     for grp in row_grp:
         gg = tf[grp.split()]
         gopnb = GridOptionsBuilder.from_dataframe(gg)
-        gopnb.configure_default_column(lockVisible=True)
+        gopnb.configure_default_column(lockVisible=True,suppressMovable=True)
 
         stgr = [x for x in grp.split() if x in "123456789"]
         gopnb.configure_columns(column_names=stgr,cellStyle={'backgroundColor': '#cc99cc'})
@@ -174,7 +174,7 @@ with lrp:
     for grp in row_grp:
         gg = df[grp.split()].loc[kw]
         gopnb = GridOptionsBuilder.from_dataframe(gg)
-        gopnb.configure_default_column(lockVisible=True)
+        gopnb.configure_default_column(lockVisible=True,suppressMovable=True)
         xx=[x for x in grp if x in xngn+pp_bm]
                 
         gopnb.configure_columns(column_names=xx,cellStyle={'backgroundColor': '#9F79EE'})
@@ -194,7 +194,7 @@ with qmp:
     for grp in row_grp:
         gg = df[grp.split()].loc[kw]
         gopnb = GridOptionsBuilder.from_dataframe(gg)
-        gopnb.configure_default_column(lockVisible=True)
+        gopnb.configure_default_column(lockVisible=True,suppressMovable=True)
         
 
 
