@@ -178,6 +178,10 @@ with lrp:
         xx=[x for x in grp if x in xngn+pp_bm]
                 
         gopnb.configure_columns(column_names=xx,cellStyle={'backgroundColor': '#9F79EE'})
+        nms = [x.split() for x in grp]
+        tmp =[]
+        nms = [tmp.extend(x) for x in nms]
+        gopnb.configure_columns(column_names=tmp,headerName='')
 
         grid_options = gopnb.build()
         ag = AgGrid(gg,grid_options,columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW )
