@@ -158,7 +158,7 @@ class HePan(TDpan):
         xia_jiang='  '
         pan = self.lr.pan
         tjname=dict(zip(['贵人', '腾蛇', '朱雀', '六合', '勾陈', '青龙', '天空', '白虎', '太常', '玄武', '太阴', '天后'],"贵蛇雀合勾龙空虎常玄阴后"))
-        for zhi in pan:
+        for zhi in  '巳午未申辰酉卯戌寅丑子亥':
             j = tjname[pan[zhi]['天将']]
             s = pan[zhi]['天盘']
             if zhi in '巳午未申':
