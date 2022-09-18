@@ -439,7 +439,7 @@ class DunJia(TDpan):
         xs = DunJia.xunshou(jiazi)
         shigan = xs if shigan=='甲' else shigan
         
-        men = dipan.rev_get('宫干')[xs]['index'] if xs not in self.zhonggong['宫干'] else 5
+        men = dipan.rev_get('宫干')[xs]['index'] if xs not in zg['宫干'] else 5
         sn = -1 if yy else 1
         step = (sn*self.Gan.index(shigan)+men)%9
         step = step if step else 9
