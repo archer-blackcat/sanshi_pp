@@ -408,7 +408,7 @@ class DunJia(TDpan):
         
         self.jg = 8 if (yy and jigong) else 2
         
-        dipan.pan[self.jg]['宫干']=dipan.pan[self.jg]['宫干']+zg['宫干']
+        #dipan.pan[self.jg]['宫干']=dipan.pan[self.jg]['宫干']+zg['宫干']
         
         jiuxing = [self.pan[x]['九星'] for x in dipan.pan]
         dipan.addv('九星',jiuxing)
