@@ -461,7 +461,7 @@ class DunJia(TDpan):
             xs = gong if xs in gong else xs
             shigan=gong if shigan in gong else shigan
             
-        luogong=dipan.rev_get('天盘')[xs]['index'] if xs not in zg['宫干'] 
+        luogong=dipan.rev_get('天盘')[xs]['index'] if xs in dipan.rev_get('天盘') else self.jg 
         shen = self.shen.reverse().rerange('值符') if yy else self.shen
         dipan.addv('八神',shen,loc=luogong)
         return dipan
