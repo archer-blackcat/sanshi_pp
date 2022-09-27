@@ -388,6 +388,7 @@ class DunJia(TDpan):
         self.zhonggong = self.pan.pop(5)
         self.addv('八门','休生伤杜景死惊开')
         self.shen=ModList(['值符','腾蛇','太阴','六合','白虎','玄武','九地','九天'])
+        self.jg=2
         
         
     def junum(self,jiazi,jieqi):
@@ -408,7 +409,8 @@ class DunJia(TDpan):
         
         self.jg = 8 if (yy and jigong) else 2
         
-        #dipan.pan[self.jg]['宫干']=dipan.pan[self.jg]['宫干']+zg['宫干']
+        # dipan.pan[self.jg]['宫干']=dipan.pan[self.jg]['宫干']+zg['宫干']
+        # zg['宫干']=dipan.pan[self.jg]['宫干']+zg['宫干']
         
         jiuxing = [self.pan[x]['九星'] for x in dipan.pan]
         dipan.addv('九星',jiuxing)
@@ -426,7 +428,7 @@ class DunJia(TDpan):
             xs = gong if xs in gong else xs
             shigan=gong if shigan in gong else shigan
         
-        luogong = dipan.rev_get('宫干')[shigan]['index']
+        luogong = dipan.rev_get('宫干')[shigan]['index'] if shigan in dipan.rev_get('宫干') else self.jg
         dipan.addv('天盘',dipan.get_name('宫干').rerange(xs),loc=luogong)
         for x in dipan.pan:
             dipan.pan[x]['天盘星']=dipan.pan[dipan.rev_get('宫干')[dipan.pan[x]['天盘']]['index']]['九星']
@@ -446,8 +448,8 @@ class DunJia(TDpan):
         if step == 5:
             g = zg['宫干']
             tom = dipan.rev_get('宫干')
-            for x in tom:
-                step = tom[x]['index'] if (g in x) else step
+            step=self.jg
+
         zs =self.pan[men]['八门'] if men!=5 else self.pan[self.jg]['八门']
         bm = self.get_name('八门').rerange(zs)
         dipan.addv('八门',bm,loc=step)
@@ -461,7 +463,7 @@ class DunJia(TDpan):
             xs = gong if xs in gong else xs
             shigan=gong if shigan in gong else shigan
             
-        luogong=dipan.rev_get('天盘')[xs]['index'] if xs in dipan.rev_get('天盘') else self.jg 
+        luogong=dipan.rev_get('天盘')[xs]['index']
         shen = self.shen.reverse().rerange('值符') if yy else self.shen
         dipan.addv('八神',shen,loc=luogong)
         return dipan
