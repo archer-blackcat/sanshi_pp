@@ -189,7 +189,7 @@ with lrp:
 
 with qmp:
     df = mk_df(hp)
-    st.write(f"值使:{hp.zhishi+str(hp.zslg)}",f"值符:{hp.zhifu +str(hp.zflg)}")
+    st.write(f"值符:{hp.zhishi+str(hp.zslg)}",f"值使:{hp.zhifu +str(hp.zflg)}")
     kw = ['九星','八神','上神','宫位','八门','乙盘将','乙盘神']
     row_grp=["4 9 2",
             "3 中 7",
